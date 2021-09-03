@@ -1,0 +1,21 @@
+.label {
+  display: block;
+  margin-bottom: 30px;
+  padding-top: 20px;
+
+  font-size: 18px;
+  font-weight: 500;
+}
+.input {
+  padding: 10px 0;
+  height: 10px;
+  width: 100%;
+
+  border: none;
+  border-bottom: 1px solid rgba(33, 33, 33, 0.2);
+}
+
+.input:focus {
+  outline: none;
+  border-bottom: 1px solid #2cac60;
+}
