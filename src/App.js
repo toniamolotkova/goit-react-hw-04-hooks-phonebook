@@ -1,13 +1,14 @@
-import  { useState, useEffect } from 'react';
-import shortid from 'shortid';
+import  { useState } from 'react';
+//import shortid from 'shortid';
 
 import './App.css';
 import ContactForm from './components/ContactForm';
 import ContactsList from './components/ContactsList';
 import Section from './components/Section';
 import Filter from './components/Filter';
+import useLocalStorage from 'hooks/useLocalStorage';
 
-function App () {
+function App() {
   // state = {
   //   contacts: [
   //      { "id": "id-1", "name": "Rosie Simpson", "number": "459-12-56" },
@@ -17,11 +18,10 @@ function App () {
   //   ],
   //   filter: '',
   // };
-
-  const [contacts, setContacts] = useState(() => {
-    const localContacts = localStorage.getItem('contacts');
-    return JSON.parse(localContacts) || []   
-  });
+const [contacts, setContacts] = useLocalStorage('contacts', [])
+//   const [contacts, setContacts] = useState(() => {
+//    return JSON.parse(window.localStorage.getItem('contacts')) ?? []
+// });
   const [filter, setFilter] = useState('');
 
   // componentDidMount() {
@@ -35,9 +35,9 @@ function App () {
 
   // }
 
-  useEffect(() => {
-    return localStorage.setItem('contacts', JSON.stringify(contacts))
-  }, [contacts])
+  // useEffect(() => {
+  //   localStorage.setItem('contacts', JSON.stringify(contacts))
+  // }, [contacts])
 
   // componentDidUpdate(prevState) {
 
@@ -51,19 +51,21 @@ function App () {
 
 
 
-  const addContact = ({ name, number }) => {
-    const contact = {
-      id: shortid.generate(),
-      name,
-      number,
-    };
-    // if (contacts.find(item => item.name === contact.name)) {
-
-    //   return alert(`${contact.name} is already in contacts`);
-  
- 
+  const addContact = (contact) => {
+    // const contact = {
+    //   id: shortid.generate(),
+    //   name,
+    //   number,
     // };
-    setContacts([ contact, ...contacts]);
+  //   if (contacts.find(item => item.name === contact.name)) {
+
+  //     return alert(`${contact.name} is already in contacts`);
+  //  };
+  
+    
+    setContacts([contact, ...contacts]);
+     console.log(contacts)
+ 
   }
 
   const onDeleteContact = id => {
@@ -92,7 +94,7 @@ function App () {
           <Filter value={filter} onChange={onFilterChange} />
           {contacts.length ? (
             <ContactsList
-              contacts={getFilteredContacts()}
+              contacts={ getFilteredContacts()}
               onDeleteContact={onDeleteContact}
             />
           ) : null}

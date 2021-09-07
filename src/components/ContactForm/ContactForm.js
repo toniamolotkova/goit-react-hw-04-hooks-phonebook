@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import s from './ContactForm.module.css';
-
+import shortid from 'shortid';
 
 function ContactForm({ onSubmit }) {
   
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
 
-
+  const id = shortid.generate();
+ 
   const handleChange = e => {
     const { name, value } = e.currentTarget;
 
@@ -25,7 +26,8 @@ function ContactForm({ onSubmit }) {
 
   const handleSubmit = e => {
     e.preventDefault();
-    onSubmit({name, number});
+
+    onSubmit({name, number, id });
     reset();
   };
 
