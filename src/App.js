@@ -1,6 +1,8 @@
 import  { useState } from 'react';
-//import shortid from 'shortid';
-
+import shortid from 'shortid';
+import { ToastContainer } from 'react-toastify';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import './App.css';
 import ContactForm from './components/ContactForm';
 import ContactsList from './components/ContactsList';
@@ -51,21 +53,19 @@ const [contacts, setContacts] = useLocalStorage('contacts', [])
 
 
 
-  const addContact = (contact) => {
-    // const contact = {
-    //   id: shortid.generate(),
-    //   name,
-    //   number,
-    // };
-  //   if (contacts.find(item => item.name === contact.name)) {
+  const addContact = ({ name, number}) => {
+    const contact = {
+      id: shortid.generate(),
+      name,
+      number,
+    };
+    if (contacts.find(item => item.name === contact.name)) {
 
-  //     return alert(`${contact.name} is already in contacts`);
-  //  };
-  
-    
-    setContacts([contact, ...contacts]);
-     console.log(contacts)
- 
+      return toast.warn(`${contact.name} is already in contacts`);
+      //alert(`${contact.name} is already in contacts`);
+   };
+   
+    setContacts(prevContacts => [...prevContacts, contact]); 
   }
 
   const onDeleteContact = id => {
@@ -99,6 +99,7 @@ const [contacts, setContacts] = useLocalStorage('contacts', [])
             />
           ) : null}
         </Section>
+         <ToastContainer />
       </>
     );
   
